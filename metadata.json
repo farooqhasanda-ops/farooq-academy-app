@@ -1,0 +1,6 @@
+{
+  "name": "Stitch Mobile Suite",
+  "description": "Production-ready 4-screen mobile web app featuring Dashboard, Financial Calculator, Interactive Quiz, and Activity Analytics with Midnight Blue (#0B132B) and Golden Amber accents.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

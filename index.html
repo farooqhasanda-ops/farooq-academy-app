@@ -1,0 +1,1324 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- iOS Mobile Optimization & Standalone PWA Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Stitch App" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="theme-color" content="#0B132B" />
+
+    <title>Stitch Mobile Suite</title>
+    <meta name="description" content="Production-ready 4-screen mobile web app featuring Dashboard, Financial Calculator, Interactive Quiz, and Activity Analytics with Midnight Blue (#0B132B) and Golden Amber accents." />
+    <meta property="og:title" content="Stitch Mobile Suite" />
+    <meta property="og:description" content="Production-ready 4-screen mobile web app featuring Dashboard, Financial Calculator, Interactive Quiz, and Activity Analytics with Midnight Blue (#0B132B) and Golden Amber accents." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Google Fonts for High-End Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Apple Touch Icon Data URI (Golden Amber & Midnight Blue) -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%230B132B'/%3E%3Ccircle cx='256' cy='256' r='180' stroke='%23F59E0B' stroke-width='16' fill='none' stroke-dasharray='12 8'/%3E%3Cpath d='M256 128 L340 340 L256 300 L172 340 Z' fill='%23F59E0B'/%3E%3Ccircle cx='256' cy='210' r='24' fill='%230B132B'/%3E%3C/svg%3E" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230B132B'/%3E%3Cpath d='M50 20 L75 75 L50 64 L25 75 Z' fill='%23F59E0B'/%3E%3C/svg%3E" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              midnight: {
+                950: '#060B1A',
+                900: '#0B132B',
+                850: '#0F1A3B',
+                800: '#152450',
+                700: '#1D306A',
+                600: '#2A438D',
+                border: '#1F315E',
+                borderLight: '#2C4480',
+              },
+              amber: {
+                50: '#FFFBEB',
+                100: '#FEF3C7',
+                200: '#FDE68A',
+                300: '#FCD34D',
+                400: '#FBBF24',
+                500: '#F59E0B',
+                600: '#D97706',
+                700: '#B45309',
+                800: '#92400E',
+                900: '#78350F',
+                glow: 'rgba(245, 158, 11, 0.22)',
+              }
+            },
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            },
+            boxShadow: {
+              'amber-glow': '0 0 24px -2px rgba(245, 158, 11, 0.35)',
+              'amber-glow-sm': '0 0 14px -1px rgba(245, 158, 11, 0.25)',
+              'card': '0 8px 30px rgba(4, 8, 20, 0.55)',
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+      /* Standalone iOS PWA & Mobile Ergonomics */
+      html, body {
+        background-color: #060B1A;
+        color: #F8FAFC;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        overscroll-behavior-y: none;
+      }
+      
+      /* Safe area insets for iPhone notch and home indicator */
+      .pt-safe {
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 16px);
+      }
+      
+      /* Custom slider styling for touch */
+      input[type=range] {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 6px;
+        background: #1D306A;
+        border-radius: 9999px;
+        outline: none;
+      }
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: #F59E0B;
+        box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+        cursor: pointer;
+        border: 2px solid #FFFFFF;
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+      }
+      input[type=range]::-webkit-slider-thumb:active {
+        transform: scale(1.2);
+        box-shadow: 0 0 18px rgba(245, 158, 11, 0.85);
+      }
+      
+      /* Hide scrollbar while keeping scrollable */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Glow & animated accents */
+      .gold-radial-bg {
+        background: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 60%);
+      }
+      .card-gradient {
+        background: linear-gradient(145deg, #0F1A3B 0%, #0B132B 100%);
+      }
+      .card-gradient-gold {
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(15, 26, 59, 0.95) 100%);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-midnight-950 flex flex-col items-center justify-start text-slate-100">
+
+    <!-- Top Desktop Utility Banner (Only visible on large screens) -->
+    <header class="w-full hidden lg:flex items-center justify-between px-8 py-3 bg-midnight-900 border-b border-midnight-border text-xs z-50">
+      <div class="flex items-center gap-3">
+        <div class="w-6 h-6 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold">
+          S
+        </div>
+        <span class="font-bold tracking-tight text-slate-200">Google Stitch Mobile Framework</span>
+        <span class="text-slate-500">·</span>
+        <span class="text-slate-400">Midnight Blue (#0B132B) & Golden Amber Palette</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center bg-midnight-950 p-1 rounded-lg border border-midnight-border">
+          <button id="viewModePhoneBtn" onclick="setViewMode('phone')" class="px-3 py-1 rounded text-xs font-medium transition-colors bg-amber-500 text-midnight-950 font-bold shadow-sm">
+            iPhone Preview
+          </button>
+          <button id="viewModeWideBtn" onclick="setViewMode('wide')" class="px-3 py-1 rounded text-xs font-medium transition-colors text-slate-400 hover:text-white">
+            Expanded View
+          </button>
+        </div>
+        <button onclick="downloadStandaloneHTML()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-midnight-800 hover:bg-midnight-700 border border-midnight-borderLight text-slate-200 font-medium transition-colors">
+          <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export index.html
+        </button>
+        <button onclick="copyStandaloneHTML()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-midnight-950 font-bold transition-colors shadow-amber-glow-sm">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy Standalone Code
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Container: Adapts dynamically between native full-width mobile view and desktop frame -->
+    <div id="appContainer" class="w-full max-w-[430px] min-h-screen lg:min-h-[880px] lg:my-6 bg-midnight-900 border-x border-midnight-border lg:rounded-[44px] lg:border lg:border-midnight-borderLight/80 lg:shadow-2xl relative flex flex-col overflow-hidden transition-all duration-300">
+      
+      <!-- Top Dynamic Island & Status Bar (Simulated for iOS feel) -->
+      <div class="pt-safe w-full bg-midnight-900/90 backdrop-blur-md sticky top-0 z-40 border-b border-midnight-border/50">
+        <!-- iOS Status Bar (Clock & Status Icons) -->
+        <div class="px-6 pt-2 pb-1 flex items-center justify-between text-xs font-semibold text-slate-300 select-none">
+          <span id="statusBarClock" class="font-mono">9:41</span>
+          <!-- Dynamic Island Capsule -->
+          <div class="w-24 h-4 bg-midnight-950 rounded-full flex items-center justify-center gap-2 border border-midnight-border/40">
+            <span class="w-2 h-2 rounded-full bg-amber-500/80"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-slate-700"></span>
+          </div>
+          <!-- Battery & Wifi -->
+          <div class="flex items-center gap-1.5 text-slate-300">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"/><line x1="22" y1="11" x2="22" y2="13"/></svg>
+          </div>
+        </div>
+
+        <!-- Mobile App Bar Header -->
+        <div class="px-5 py-3 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-midnight-950 font-extrabold text-sm shadow-amber-glow-sm">
+              S
+            </div>
+            <div>
+              <h1 id="appScreenTitle" class="text-base font-bold tracking-tight text-white flex items-center gap-1.5">
+                Overview
+              </h1>
+              <p class="text-[11px] text-slate-400 font-medium">Stitch Wealth OS</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <!-- Streak Indicator -->
+            <div class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold">
+              <svg class="w-3.5 h-3.5 fill-amber-400 text-amber-400" viewBox="0 0 24 24"><path d="M12 2c.5 3 2 4.5 4 6 2.5 1.8 4 4.5 4 8a8 8 0 1 1-16 0c0-3.5 1.5-6.2 4-8 2-1.5 3.5-3 4-6z"/></svg>
+              <span id="headerStreakCount">7d</span>
+            </div>
+            <!-- Quick Action / Notification trigger -->
+            <button onclick="switchScreen('profile')" class="w-9 h-9 rounded-xl bg-midnight-800 border border-midnight-borderLight flex items-center justify-center text-slate-300 hover:text-white transition-colors relative" aria-label="Notifications">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-400"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen Views Wrapper (Scrollable content area) -->
+      <main class="flex-1 overflow-y-auto no-scrollbar pb-28">
+
+        <!-- ========================================== -->
+        <!-- SCREEN 1: OVERVIEW / DASHBOARD             -->
+        <!-- ========================================== -->
+        <section id="screen-home" class="screen-view p-5 space-y-5 gold-radial-bg">
+          
+          <!-- Hero Financial Health Card -->
+          <div class="card-gradient rounded-3xl p-5 border border-midnight-borderLight shadow-card relative overflow-hidden">
+            <!-- Subtle Gold Light Ray -->
+            <div class="absolute -top-16 -right-16 w-40 h-40 bg-amber-500/15 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+              <span class="font-medium tracking-wide">TOTAL NET PORTFOLIO</span>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-semibold text-[11px] flex items-center gap-1">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+                +14.8%
+              </span>
+            </div>
+
+            <div class="flex items-baseline gap-2 mb-4">
+              <h2 class="text-3xl font-extrabold text-white tracking-tight font-mono tabular-nums">$48,650<span class="text-xl text-amber-400">.00</span></h2>
+            </div>
+
+            <!-- Quick Action Row -->
+            <div class="grid grid-cols-4 gap-2 pt-2 border-t border-midnight-border">
+              <button onclick="switchScreen('calc')" class="flex flex-col items-center gap-1 p-2 rounded-2xl bg-midnight-800/80 hover:bg-midnight-700/80 border border-midnight-border transition-all active:scale-95">
+                <div class="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+                </div>
+                <span class="text-[10px] font-semibold text-slate-300">Calculator</span>
+              </button>
+
+              <button onclick="switchScreen('quiz')" class="flex flex-col items-center gap-1 p-2 rounded-2xl bg-midnight-800/80 hover:bg-midnight-700/80 border border-midnight-border transition-all active:scale-95">
+                <div class="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <span class="text-[10px] font-semibold text-slate-300">Quiz Test</span>
+              </button>
+
+              <button onclick="quickDepositAction()" class="flex flex-col items-center gap-1 p-2 rounded-2xl bg-midnight-800/80 hover:bg-midnight-700/80 border border-midnight-border transition-all active:scale-95">
+                <div class="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </div>
+                <span class="text-[10px] font-semibold text-slate-300">Deposit</span>
+              </button>
+
+              <button onclick="switchScreen('profile')" class="flex flex-col items-center gap-1 p-2 rounded-2xl bg-midnight-800/80 hover:bg-midnight-700/80 border border-midnight-border transition-all active:scale-95">
+                <div class="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <span class="text-[10px] font-semibold text-slate-300">Analytics</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Weekly Streak & Daily Discipline Scroller -->
+          <div class="bg-midnight-850 p-4 rounded-3xl border border-midnight-border">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Discipline Track</span>
+              <span class="text-xs font-semibold text-amber-400">Week 42 · Perfect</span>
+            </div>
+            <div class="grid grid-cols-7 gap-1.5 text-center">
+              <div class="p-2 rounded-2xl bg-midnight-950/80 border border-amber-500/30 flex flex-col items-center gap-1">
+                <span class="text-[10px] text-slate-400 font-medium">M</span>
+                <span class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold">✓</span>
+              </div>
+              <div class="p-2 rounded-2xl bg-midnight-950/80 border border-amber-500/30 flex flex-col items-center gap-1">
+                <span class="text-[10px] text-slate-400 font-medium">T</span>
+                <span class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold">✓</span>
+              </div>
+              <div class="p-2 rounded-2xl bg-midnight-950/80 border border-amber-500/30 flex flex-col items-center gap-1">
+                <span class="text-[10px] text-slate-400 font-medium">W</span>
+                <span class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold">✓</span>
+              </div>
+              <div class="p-2 rounded-2xl bg-midnight-950/80 border border-amber-500/30 flex flex-col items-center gap-1">
+                <span class="text-[10px] text-slate-400 font-medium">T</span>
+                <span class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold">✓</span>
+              </div>
+              <div class="p-2 rounded-2xl bg-midnight-950/80 border border-amber-500/30 flex flex-col items-center gap-1">
+                <span class="text-[10px] text-slate-400 font-medium">F</span>
+                <span class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold">✓</span>
+              </div>
+              <div class="p-2 rounded-2xl bg-amber-500 text-midnight-950 shadow-amber-glow-sm flex flex-col items-center gap-1 font-bold">
+                <span class="text-[10px] text-midnight-950 font-bold">S</span>
+                <span class="w-5 h-5 rounded-full bg-midnight-950 text-amber-400 flex items-center justify-center text-xs font-bold">★</span>
+              </div>
+              <div class="p-2 rounded-2xl bg-midnight-950/40 border border-midnight-border/50 flex flex-col items-center gap-1 text-slate-500">
+                <span class="text-[10px] font-medium">S</span>
+                <span class="w-5 h-5 rounded-full bg-midnight-800 text-slate-500 flex items-center justify-center text-xs">○</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dual Key Metric Cards -->
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-midnight-850 p-4 rounded-3xl border border-midnight-border flex flex-col justify-between">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-slate-400">Savings Rate</span>
+                <span class="text-amber-400 font-mono text-xs font-bold">Target 40%</span>
+              </div>
+              <div class="my-3 flex items-center justify-center">
+                <div class="relative w-20 h-20 flex items-center justify-center">
+                  <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                    <path class="text-midnight-700" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="text-amber-500" stroke-dasharray="78, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                  </svg>
+                  <div class="absolute text-center">
+                    <span class="text-lg font-bold font-mono text-white">34%</span>
+                  </div>
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-400 text-center font-medium">+$450 ahead of goal</p>
+            </div>
+
+            <div class="bg-midnight-850 p-4 rounded-3xl border border-midnight-border flex flex-col justify-between">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-slate-400">Financial IQ</span>
+                <span class="text-amber-400 text-xs font-semibold">Tier 4</span>
+              </div>
+              <div class="my-2 text-center py-2">
+                <span class="text-2xl font-black font-mono text-amber-400">880</span>
+                <span class="text-xs text-slate-500">/ 1000</span>
+                <div class="w-full bg-midnight-700 h-2 rounded-full mt-2 overflow-hidden">
+                  <div class="bg-gradient-to-r from-amber-600 to-amber-400 h-full rounded-full" style="width: 88%"></div>
+                </div>
+              </div>
+              <button onclick="switchScreen('quiz')" class="w-full py-1.5 rounded-xl bg-midnight-800 hover:bg-midnight-700 border border-midnight-borderLight text-[11px] text-amber-300 font-semibold text-center transition-colors">
+                Boost Score →
+              </button>
+            </div>
+          </div>
+
+          <!-- Curated Insights Section -->
+          <div class="space-y-2">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Curated Stitch Feed</h3>
+            
+            <div class="p-4 rounded-2xl bg-midnight-850 border border-midnight-border hover:border-amber-500/40 transition-colors flex items-start gap-3">
+              <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+              </div>
+              <div class="flex-1">
+                <h4 class="text-xs font-bold text-white mb-0.5">Rule of 72 Milestone Approaching</h4>
+                <p class="text-[11px] text-slate-400 leading-relaxed">At your current 8.5% return rate, your portfolio is set to double in 8.4 years without adding new funds.</p>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-midnight-850 border border-midnight-border hover:border-amber-500/40 transition-colors flex items-start gap-3">
+              <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <div class="flex-1">
+                <h4 class="text-xs font-bold text-white mb-0.5">Weekly Finance Mastery Quiz</h4>
+                <p class="text-[11px] text-slate-400 leading-relaxed">5 quick questions on asset allocation and inflation hedging. Test yourself now!</p>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 2: INTERACTIVE CALCULATOR           -->
+        <!-- ========================================== -->
+        <section id="screen-calc" class="screen-view hidden p-5 space-y-5">
+          
+          <!-- Preset Fast-Pick Bar -->
+          <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
+            <button onclick="applyCalcPreset('starter')" class="preset-btn px-3 py-1.5 rounded-full text-xs font-medium bg-midnight-800 text-slate-300 border border-midnight-border whitespace-nowrap hover:border-amber-500/50 transition-all">
+              Starter ($1k)
+            </button>
+            <button onclick="applyCalcPreset('growth')" class="preset-btn px-3 py-1.5 rounded-full text-xs font-medium bg-amber-500/20 text-amber-300 border border-amber-500/40 whitespace-nowrap">
+              Aggressive ($10k)
+            </button>
+            <button onclick="applyCalcPreset('retirement')" class="preset-btn px-3 py-1.5 rounded-full text-xs font-medium bg-midnight-800 text-slate-300 border border-midnight-border whitespace-nowrap hover:border-amber-500/50 transition-all">
+              Retirement ($25k)
+            </button>
+            <button onclick="applyCalcPreset('home')" class="preset-btn px-3 py-1.5 rounded-full text-xs font-medium bg-midnight-800 text-slate-300 border border-midnight-border whitespace-nowrap hover:border-amber-500/50 transition-all">
+              Home Fund ($5k)
+            </button>
+          </div>
+
+          <!-- Dynamic Output Projection Card -->
+          <div class="card-gradient rounded-3xl p-5 border border-amber-500/30 shadow-amber-glow-sm relative">
+            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+              <span class="font-bold uppercase tracking-wider text-amber-400">Estimated Future Value</span>
+              <span id="calcDurationTag" class="text-slate-300 font-mono">10 Years</span>
+            </div>
+            
+            <div class="my-2">
+              <h3 id="calcFutureValue" class="text-4xl font-extrabold text-white font-mono tracking-tight tabular-nums">$128,429</h3>
+            </div>
+
+            <!-- Breakdown comparison bar -->
+            <div class="mt-4 space-y-1.5">
+              <div class="w-full bg-midnight-950 h-3 rounded-full overflow-hidden flex border border-midnight-border">
+                <div id="barPrincipal" class="bg-slate-400 h-full transition-all duration-300" style="width: 55%"></div>
+                <div id="barInterest" class="bg-gradient-to-r from-amber-500 to-amber-300 h-full transition-all duration-300" style="width: 45%"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] font-mono">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-sm bg-slate-400"></span>
+                  <span class="text-slate-400">Principal: <strong id="calcPrincipalVal" class="text-slate-200">$70,000</strong></span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-sm bg-amber-400"></span>
+                  <span class="text-amber-400">Growth: <strong id="calcInterestVal" class="text-amber-300">$58,429</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Sliders Form -->
+          <div class="bg-midnight-850 p-5 rounded-3xl border border-midnight-border space-y-5">
+            
+            <!-- 1. Initial Deposit -->
+            <div>
+              <div class="flex items-center justify-between text-xs mb-1.5">
+                <label for="inputInitial" class="font-semibold text-slate-300">Initial Starting Deposit</label>
+                <div class="flex items-center text-amber-400 font-mono font-bold bg-midnight-900 px-2 py-0.5 rounded-md border border-midnight-border">
+                  <span>$</span>
+                  <input type="number" id="inputInitialNum" value="10000" min="0" max="250000" step="500" class="w-16 bg-transparent text-right outline-none text-white font-mono" />
+                </div>
+              </div>
+              <input type="range" id="inputInitial" min="0" max="100000" step="1000" value="10000" oninput="handleCalcChange()" />
+              <div class="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
+                <span>$0</span>
+                <span>$50,000</span>
+                <span>$100,000</span>
+              </div>
+            </div>
+
+            <!-- 2. Monthly Contribution -->
+            <div>
+              <div class="flex items-center justify-between text-xs mb-1.5">
+                <label for="inputMonthly" class="font-semibold text-slate-300">Monthly Contribution</label>
+                <div class="flex items-center text-amber-400 font-mono font-bold bg-midnight-900 px-2 py-0.5 rounded-md border border-midnight-border">
+                  <span>$</span>
+                  <input type="number" id="inputMonthlyNum" value="500" min="0" max="10000" step="50" class="w-14 bg-transparent text-right outline-none text-white font-mono" />
+                </div>
+              </div>
+              <input type="range" id="inputMonthly" min="0" max="5000" step="50" value="500" oninput="handleCalcChange()" />
+              <div class="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
+                <span>$0/mo</span>
+                <span>$2,500/mo</span>
+                <span>$5,000/mo</span>
+              </div>
+            </div>
+
+            <!-- 3. Annual Interest Rate -->
+            <div>
+              <div class="flex items-center justify-between text-xs mb-1.5">
+                <label for="inputRate" class="font-semibold text-slate-300">Estimated Annual Yield</label>
+                <div class="flex items-center text-amber-400 font-mono font-bold bg-midnight-900 px-2 py-0.5 rounded-md border border-midnight-border">
+                  <input type="number" id="inputRateNum" value="8.5" min="1" max="25" step="0.5" class="w-10 bg-transparent text-right outline-none text-white font-mono" />
+                  <span>%</span>
+                </div>
+              </div>
+              <input type="range" id="inputRate" min="1" max="20" step="0.5" value="8.5" oninput="handleCalcChange()" />
+              <div class="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
+                <span>1% (Conservative)</span>
+                <span>8.5% (S&P Avg)</span>
+                <span>20% (Aggressive)</span>
+              </div>
+            </div>
+
+            <!-- 4. Duration (Years) -->
+            <div>
+              <div class="flex items-center justify-between text-xs mb-1.5">
+                <label for="inputYears" class="font-semibold text-slate-300">Investment Horizon</label>
+                <div class="flex items-center text-amber-400 font-mono font-bold bg-midnight-900 px-2 py-0.5 rounded-md border border-midnight-border">
+                  <input type="number" id="inputYearsNum" value="10" min="1" max="50" step="1" class="w-8 bg-transparent text-right outline-none text-white font-mono" />
+                  <span>Yrs</span>
+                </div>
+              </div>
+              <input type="range" id="inputYears" min="1" max="40" step="1" value="10" oninput="handleCalcChange()" />
+              <div class="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
+                <span>1 Year</span>
+                <span>20 Years</span>
+                <span>40 Years</span>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="pt-2 flex gap-2">
+              <button onclick="saveCalculationToLog()" class="flex-1 py-3 px-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-midnight-950 font-extrabold text-sm flex items-center justify-center gap-2 shadow-amber-glow transition-all active:scale-95">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                Save to Log
+              </button>
+              <button onclick="resetCalculator()" class="py-3 px-4 rounded-2xl bg-midnight-800 hover:bg-midnight-700 border border-midnight-borderLight text-slate-300 font-bold text-sm transition-all" aria-label="Reset">
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <!-- Milestones Forecast Table -->
+          <div class="bg-midnight-850 p-4 rounded-3xl border border-midnight-border">
+            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Milestone Forecast</h4>
+            <div id="milestonesTable" class="divide-y divide-midnight-border text-xs">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 3: INTERACTIVE QUIZ TAB             -->
+        <!-- ========================================== -->
+        <section id="screen-quiz" class="screen-view hidden p-5 space-y-5">
+          
+          <!-- Active Quiz Container -->
+          <div id="quizActiveView" class="space-y-4">
+            
+            <!-- Quiz Header & Step Counter -->
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Financial Literacy</span>
+                <h3 id="quizStepLabel" class="text-base font-bold text-white">Question 1 of 5</h3>
+              </div>
+              <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-midnight-800 border border-midnight-border text-xs font-mono font-semibold text-slate-300">
+                <span class="text-amber-400">Score:</span>
+                <span id="quizLiveScore">0</span>/5
+              </div>
+            </div>
+
+            <!-- Quiz Progress Bar -->
+            <div class="w-full bg-midnight-800 h-2 rounded-full overflow-hidden border border-midnight-border">
+              <div id="quizProgressBar" class="bg-gradient-to-r from-amber-600 to-amber-400 h-full rounded-full transition-all duration-300" style="width: 20%"></div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="card-gradient p-5 rounded-3xl border border-midnight-borderLight relative shadow-card">
+              <div class="text-[11px] font-semibold text-amber-400 mb-1 flex items-center gap-1">
+                <span id="quizCategoryBadge">COMPOUND INTEREST</span>
+              </div>
+              <h4 id="quizQuestionText" class="text-base font-bold text-white leading-snug">
+                Under the financial "Rule of 72", approximately how many years will it take for an investment to double at an 8% annual return?
+              </h4>
+            </div>
+
+            <!-- Options Container -->
+            <div id="quizOptionsList" class="space-y-2.5">
+              <!-- Populated by JavaScript -->
+            </div>
+
+            <!-- Feedback & Explanation Box (Shown after selecting an answer) -->
+            <div id="quizExplanationBox" class="hidden p-4 rounded-2xl bg-midnight-850 border border-midnight-borderLight transition-all">
+              <div class="flex items-center gap-2 mb-1">
+                <span id="quizFeedbackIcon" class="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold"></span>
+                <span id="quizFeedbackTitle" class="text-xs font-bold"></span>
+              </div>
+              <p id="quizExplanationText" class="text-xs text-slate-300 leading-relaxed"></p>
+            </div>
+
+            <!-- Next / Submit Action -->
+            <div class="pt-2">
+              <button id="quizNextBtn" onclick="handleQuizNext()" disabled class="w-full py-3.5 px-4 rounded-2xl bg-midnight-800 text-slate-500 font-extrabold text-sm flex items-center justify-center gap-2 border border-midnight-border transition-all cursor-not-allowed">
+                <span>Select an Option</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Quiz Completion View (Hidden by default) -->
+          <div id="quizFinishedView" class="hidden space-y-5 text-center py-4">
+            
+            <div class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-midnight-950 shadow-amber-glow">
+              <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+            </div>
+
+            <div>
+              <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">Assessment Completed</span>
+              <h3 class="text-2xl font-black text-white mt-1">Stitch Scholar Rank</h3>
+              <p id="quizBadgeRank" class="text-sm font-semibold text-amber-300 mt-0.5">Tier 5 · Wealth Strategist</p>
+            </div>
+
+            <!-- Score Summary Dial Card -->
+            <div class="card-gradient p-5 rounded-3xl border border-midnight-borderLight max-w-xs mx-auto">
+              <div class="text-4xl font-black font-mono text-white mb-1">
+                <span id="quizFinalScore" class="text-amber-400">5</span> <span class="text-xl text-slate-500">/ 5</span>
+              </div>
+              <p id="quizScorePercentage" class="text-xs text-slate-300 font-semibold mb-3">100% Accuracy</p>
+              
+              <div class="grid grid-cols-2 gap-2 text-left pt-3 border-t border-midnight-border text-[11px]">
+                <div>
+                  <span class="text-slate-400 block">Mastery XP</span>
+                  <span class="text-amber-400 font-mono font-bold">+250 XP</span>
+                </div>
+                <div>
+                  <span class="text-slate-400 block">Streak Status</span>
+                  <span class="text-emerald-400 font-mono font-bold">Maintained 🔥</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review Action Buttons -->
+            <div class="space-y-2 pt-2">
+              <button onclick="restartQuiz()" class="w-full py-3.5 px-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-midnight-950 font-extrabold text-sm shadow-amber-glow transition-all active:scale-95">
+                Retake Assessment
+              </button>
+              <button onclick="switchScreen('calc')" class="w-full py-3 px-4 rounded-2xl bg-midnight-800 hover:bg-midnight-700 border border-midnight-borderLight text-slate-300 font-semibold text-xs transition-colors">
+                Apply Lessons in Calculator →
+              </button>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 4: ACTIVITY & PROFILE               -->
+        <!-- ========================================== -->
+        <section id="screen-profile" class="screen-view hidden p-5 space-y-5">
+          
+          <!-- User Profile Monogram Card -->
+          <div class="card-gradient p-5 rounded-3xl border border-midnight-borderLight shadow-card flex items-center gap-4">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-300 text-midnight-950 font-black text-xl flex items-center justify-center shadow-amber-glow-sm">
+              AM
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-bold text-white">Alex Mercer</h3>
+                <span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 text-[10px] font-bold">PRO</span>
+              </div>
+              <p class="text-xs text-slate-400 font-medium">Stitch Member · Joined 2026</p>
+              <div class="flex items-center gap-3 mt-1.5 text-[11px] text-amber-300/90 font-mono">
+                <span>Streak: 7 Days</span>
+                <span>·</span>
+                <span>IQ: 880</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Saved Calculations Section -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between px-1">
+              <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Saved Calculations</h4>
+              <button onclick="clearAllSavedCalcs()" class="text-[11px] text-rose-400 hover:text-rose-300 font-semibold">
+                Clear All
+              </button>
+            </div>
+
+            <div id="savedCalcsList" class="space-y-2">
+              <!-- Dynamically populated from localStorage -->
+            </div>
+          </div>
+
+          <!-- iOS PWA Standalone Guidance -->
+          <div class="p-4 rounded-3xl bg-midnight-850 border border-midnight-border space-y-2">
+            <div class="flex items-center gap-2 text-amber-400 font-bold text-xs">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              <span>Install as iOS Standalone App</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              To install this app on your iPhone: Open Safari, tap the <strong class="text-white">Share</strong> button, then select <strong class="text-white">"Add to Home Screen"</strong>. It will run without browser bars in full standalone mode.
+            </p>
+          </div>
+
+          <!-- Instant Deployment & Code Utility -->
+          <div class="p-4 rounded-3xl bg-midnight-850 border border-midnight-border space-y-3">
+            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Instant Deployment</h4>
+            <p class="text-xs text-slate-300">
+              This application is bundled into this single, production-ready <code class="text-amber-400 font-mono">index.html</code>. You can deploy it to any static web host or server instantly.
+            </p>
+            <div class="flex gap-2">
+              <button onclick="downloadStandaloneHTML()" class="flex-1 py-2.5 px-3 rounded-xl bg-midnight-800 hover:bg-midnight-700 border border-midnight-borderLight text-xs font-bold text-white flex items-center justify-center gap-1.5 transition-colors">
+                <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download HTML
+              </button>
+              <button onclick="copyStandaloneHTML()" class="flex-1 py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-midnight-950 text-xs font-extrabold flex items-center justify-center gap-1.5 shadow-amber-glow-sm transition-colors">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copy Code
+              </button>
+            </div>
+          </div>
+
+        </section>
+
+      </main>
+
+      <!-- ========================================== -->
+      <!-- FIXED BOTTOM NAVIGATION BAR                -->
+      <!-- ========================================== -->
+      <nav class="fixed lg:absolute bottom-0 left-0 right-0 z-50 bg-midnight-950/95 backdrop-blur-xl border-t border-midnight-border pb-safe">
+        <div class="grid grid-cols-4 items-center h-16 px-2">
+          
+          <!-- Tab 1: Overview -->
+          <button onclick="switchScreen('home')" id="tab-home" class="nav-tab flex flex-col items-center justify-center gap-1 h-full min-h-[44px] text-amber-400 transition-colors">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span class="text-[10px] font-bold tracking-tight">Overview</span>
+          </button>
+
+          <!-- Tab 2: Calculator -->
+          <button onclick="switchScreen('calc')" id="tab-calc" class="nav-tab flex flex-col items-center justify-center gap-1 h-full min-h-[44px] text-slate-400 hover:text-slate-200 transition-colors">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+            <span class="text-[10px] font-semibold tracking-tight">Calculator</span>
+          </button>
+
+          <!-- Tab 3: Quiz -->
+          <button onclick="switchScreen('quiz')" id="tab-quiz" class="nav-tab flex flex-col items-center justify-center gap-1 h-full min-h-[44px] text-slate-400 hover:text-slate-200 transition-colors">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span class="text-[10px] font-semibold tracking-tight">Quiz</span>
+          </button>
+
+          <!-- Tab 4: Profile / Activity -->
+          <button onclick="switchScreen('profile')" id="tab-profile" class="nav-tab flex flex-col items-center justify-center gap-1 h-full min-h-[44px] text-slate-400 hover:text-slate-200 transition-colors">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span class="text-[10px] font-semibold tracking-tight">Activity</span>
+          </button>
+
+        </div>
+        <!-- iOS Home Indicator bar -->
+        <div class="w-32 h-1 bg-slate-600/50 rounded-full mx-auto my-1"></div>
+      </nav>
+
+    </div>
+
+    <!-- Toast Notification Overlay -->
+    <div id="appToast" class="fixed bottom-20 z-50 pointer-events-none transition-all duration-300 opacity-0 transform translate-y-3 px-4 py-2.5 rounded-2xl bg-amber-500 text-midnight-950 font-bold text-xs shadow-amber-glow flex items-center gap-2">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+      <span id="toastMessage">Calculation saved!</span>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- INTERACTIVE JAVASCRIPT APPLICATION LOGIC   -->
+    <!-- ========================================== -->
+    <script>
+      // 1. STATE MANAGEMENT
+      let currentScreen = 'home';
+      let activePreset = 'growth';
+
+      // 2. QUIZ QUESTIONS REPOSITORY
+      const quizQuestions = [
+        {
+          category: 'COMPOUND INTEREST',
+          question: 'According to the financial "Rule of 72", approximately how many years will it take for an investment to double at an 8% annual return?',
+          options: [
+            'Approximately 9 years (72 ÷ 8 = 9)',
+            'Approximately 6 years',
+            'Approximately 12.5 years',
+            'Approximately 15 years'
+          ],
+          correct: 0,
+          explanation: 'The Rule of 72 states that dividing 72 by the annual return percentage yields the approximate years required to double your principal: 72 ÷ 8 = 9 years.'
+        },
+        {
+          category: 'ASSET ALLOCATION',
+          question: 'What is the primary benefit of maintaining an Emergency Liquidity Fund in high-yield cash rather than equities?',
+          options: [
+            'To guarantee 20% annualized speculative growth',
+            'To prevent selling long-term invested assets during market downturns',
+            'To eliminate all taxes forever',
+            'To replace the need for health insurance'
+          ],
+          correct: 1,
+          explanation: 'Emergency liquidity protects you from having to liquidate equities at a loss during a down-market when unexpected expenses arise.'
+        },
+        {
+          category: 'INVESTING STRATEGY',
+          question: 'What is "Dollar-Cost Averaging" (DCA) designed to mitigate?',
+          options: [
+            'Currency exchange conversion fees',
+            'The risk and emotional stress of poor market timing by investing fixed sums regularly',
+            'Capital gains tax brackets',
+            'Brokerage management expense ratios'
+          ],
+          correct: 1,
+          explanation: 'DCA involves investing equal sums at regular intervals, automatically buying more shares when prices are low and fewer when prices are high.'
+        },
+        {
+          category: 'PURCHASING POWER',
+          question: 'If annual inflation is 3.5% and your savings account yields 1.5%, what is your real annual rate of return?',
+          options: [
+            '+5.0% positive return',
+            '+2.0% positive return',
+            '-2.0% negative real purchasing power loss',
+            '0% breakeven'
+          ],
+          correct: 2,
+          explanation: 'Real Return = Nominal Yield (1.5%) - Inflation (3.5%) = -2.0%. Your purchasing power is decreasing despite earning nominal interest.'
+        },
+        {
+          category: 'RETIREMENT MATH',
+          question: 'In the Trinity Study "4% Safe Withdrawal Rule", what is the target portfolio size for a desired $60,000 annual retirement income?',
+          options: [
+            '$600,000 (10x annual spending)',
+            '$1,000,000 (16.6x annual spending)',
+            '$1,500,000 (25x annual spending)',
+            '$2,400,000 (40x annual spending)'
+          ],
+          correct: 2,
+          explanation: 'Under the 4% rule, target portfolio = Annual Spending ÷ 0.04 (or Spending × 25). $60,000 × 25 = $1,500,000.'
+        }
+      ];
+
+      let quizState = {
+        currentIndex: 0,
+        selectedOption: null,
+        score: 0,
+        isAnswered: false,
+        userHistory: []
+      };
+
+      // 3. INITIALIZATION
+      document.addEventListener('DOMContentLoaded', () => {
+        updateClock();
+        setInterval(updateClock, 30000);
+        handleCalcChange();
+        renderQuizQuestion();
+        renderSavedCalculations();
+      });
+
+      // Update simulated iOS status bar clock
+      function updateClock() {
+        const now = new Date();
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        const formatted = `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
+        const clockEl = document.getElementById('statusBarClock');
+        if (clockEl) clockEl.textContent = formatted;
+      }
+
+      // SCREEN NAVIGATION
+      function switchScreen(screenId) {
+        currentScreen = screenId;
+        
+        // Hide all screens
+        document.querySelectorAll('.screen-view').forEach(el => {
+          el.classList.add('hidden');
+        });
+        
+        // Show target screen
+        const target = document.getElementById(`screen-${screenId}`);
+        if (target) {
+          target.classList.remove('hidden');
+        }
+
+        // Update Screen Title in App Bar
+        const titleMap = {
+          'home': 'Overview',
+          'calc': 'Wealth Calculator',
+          'quiz': 'Mastery Quiz',
+          'profile': 'Performance & Activity'
+        };
+        const titleEl = document.getElementById('appScreenTitle');
+        if (titleEl) titleEl.textContent = titleMap[screenId] || 'Stitch Wealth OS';
+
+        // Update Bottom Nav active state
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+          tab.classList.remove('text-amber-400');
+          tab.classList.add('text-slate-400');
+          const span = tab.querySelector('span');
+          if (span) span.classList.remove('font-bold');
+        });
+
+        const activeTab = document.getElementById(`tab-${screenId}`);
+        if (activeTab) {
+          activeTab.classList.remove('text-slate-400');
+          activeTab.classList.add('text-amber-400');
+          const span = activeTab.querySelector('span');
+          if (span) span.classList.add('font-bold');
+        }
+
+        // Trigger light haptic simulation
+        if (window.navigator && window.navigator.vibrate) {
+          try { window.navigator.vibrate(10); } catch(e) {}
+        }
+      }
+
+      // DESKTOP VIEWPORT TOGGLE
+      function setViewMode(mode) {
+        const container = document.getElementById('appContainer');
+        const phoneBtn = document.getElementById('viewModePhoneBtn');
+        const wideBtn = document.getElementById('viewModeWideBtn');
+
+        if (mode === 'wide') {
+          container.classList.remove('max-w-[430px]', 'lg:rounded-[44px]');
+          container.classList.add('max-w-4xl', 'lg:rounded-2xl');
+          wideBtn.className = 'px-3 py-1 rounded text-xs font-medium transition-colors bg-amber-500 text-midnight-950 font-bold shadow-sm';
+          phoneBtn.className = 'px-3 py-1 rounded text-xs font-medium transition-colors text-slate-400 hover:text-white';
+        } else {
+          container.classList.add('max-w-[430px]', 'lg:rounded-[44px]');
+          container.classList.remove('max-w-4xl', 'lg:rounded-2xl');
+          phoneBtn.className = 'px-3 py-1 rounded text-xs font-medium transition-colors bg-amber-500 text-midnight-950 font-bold shadow-sm';
+          wideBtn.className = 'px-3 py-1 rounded text-xs font-medium transition-colors text-slate-400 hover:text-white';
+        }
+      }
+
+      // ==========================================
+      // CALCULATOR LOGIC
+      // ==========================================
+      function handleCalcChange() {
+        const initial = parseFloat(document.getElementById('inputInitial').value) || 0;
+        const monthly = parseFloat(document.getElementById('inputMonthly').value) || 0;
+        const rate = parseFloat(document.getElementById('inputRate').value) || 0;
+        const years = parseInt(document.getElementById('inputYears').value) || 1;
+
+        // Sync numerical inputs
+        document.getElementById('inputInitialNum').value = initial;
+        document.getElementById('inputMonthlyNum').value = monthly;
+        document.getElementById('inputRateNum').value = rate;
+        document.getElementById('inputYearsNum').value = years;
+
+        // Perform Compound Interest Math
+        const r = (rate / 100) / 12;
+        const n = years * 12;
+
+        let futureValue = initial * Math.pow(1 + r, n);
+        if (r > 0) {
+          futureValue += monthly * ((Math.pow(1 + r, n) - 1) / r);
+        } else {
+          futureValue += monthly * n;
+        }
+
+        const totalPrincipal = initial + (monthly * n);
+        const totalInterest = Math.max(0, futureValue - totalPrincipal);
+
+        // Update UI Outputs
+        document.getElementById('calcFutureValue').textContent = formatCurrency(futureValue);
+        document.getElementById('calcPrincipalVal').textContent = formatCurrency(totalPrincipal);
+        document.getElementById('calcInterestVal').textContent = formatCurrency(totalInterest);
+        document.getElementById('calcDurationTag').textContent = `${years} Year${years > 1 ? 's' : ''}`;
+
+        // Update Comparison Bar width ratio
+        const total = totalPrincipal + totalInterest;
+        const principalPct = total > 0 ? (totalPrincipal / futureValue) * 100 : 50;
+        const interestPct = total > 0 ? (totalInterest / futureValue) * 100 : 50;
+
+        document.getElementById('barPrincipal').style.width = `${Math.min(100, Math.max(5, principalPct))}%`;
+        document.getElementById('barInterest').style.width = `${Math.min(100, Math.max(5, interestPct))}%`;
+
+        // Render Milestones
+        renderMilestones(initial, monthly, rate, years);
+      }
+
+      // Sync number input to slider
+      document.getElementById('inputInitialNum')?.addEventListener('input', (e) => {
+        document.getElementById('inputInitial').value = e.target.value;
+        handleCalcChange();
+      });
+      document.getElementById('inputMonthlyNum')?.addEventListener('input', (e) => {
+        document.getElementById('inputMonthly').value = e.target.value;
+        handleCalcChange();
+      });
+      document.getElementById('inputRateNum')?.addEventListener('input', (e) => {
+        document.getElementById('inputRate').value = e.target.value;
+        handleCalcChange();
+      });
+      document.getElementById('inputYearsNum')?.addEventListener('input', (e) => {
+        document.getElementById('inputYears').value = e.target.value;
+        handleCalcChange();
+      });
+
+      function renderMilestones(initial, monthly, rate, currentYears) {
+        const table = document.getElementById('milestonesTable');
+        if (!table) return;
+
+        const milestones = [3, 5, 10, 15, 20];
+        let html = '';
+
+        milestones.forEach(yr => {
+          const r = (rate / 100) / 12;
+          const n = yr * 12;
+          let val = initial * Math.pow(1 + r, n);
+          if (r > 0) val += monthly * ((Math.pow(1 + r, n) - 1) / r);
+
+          const isCurrent = yr === currentYears;
+
+          html += `
+            <div class="py-2 flex items-center justify-between ${isCurrent ? 'bg-amber-500/10 px-2 rounded-lg font-bold text-amber-300' : 'text-slate-300'}">
+              <span>Year ${yr} Milestone</span>
+              <span class="font-mono tabular-nums text-white font-semibold">${formatCurrency(val)}</span>
+            </div>
+          `;
+        });
+
+        table.innerHTML = html;
+      }
+
+      function applyCalcPreset(preset) {
+        activePreset = preset;
+        const initialEl = document.getElementById('inputInitial');
+        const monthlyEl = document.getElementById('inputMonthly');
+        const rateEl = document.getElementById('inputRate');
+        const yearsEl = document.getElementById('inputYears');
+
+        if (preset === 'starter') {
+          initialEl.value = 1000;
+          monthlyEl.value = 200;
+          rateEl.value = 7.0;
+          yearsEl.value = 5;
+        } else if (preset === 'growth') {
+          initialEl.value = 10000;
+          monthlyEl.value = 500;
+          rateEl.value = 8.5;
+          yearsEl.value = 10;
+        } else if (preset === 'retirement') {
+          initialEl.value = 25000;
+          monthlyEl.value = 750;
+          rateEl.value = 8.0;
+          yearsEl.value = 25;
+        } else if (preset === 'home') {
+          initialEl.value = 5000;
+          monthlyEl.value = 1200;
+          rateEl.value = 6.0;
+          yearsEl.value = 4;
+        }
+
+        handleCalcChange();
+        showToast(`Loaded ${preset.toUpperCase()} preset`);
+      }
+
+      function resetCalculator() {
+        applyCalcPreset('growth');
+        showToast('Calculator reset to default');
+      }
+
+      function saveCalculationToLog() {
+        const initial = parseFloat(document.getElementById('inputInitial').value);
+        const monthly = parseFloat(document.getElementById('inputMonthly').value);
+        const rate = parseFloat(document.getElementById('inputRate').value);
+        const years = parseInt(document.getElementById('inputYears').value);
+        const futureValue = document.getElementById('calcFutureValue').textContent;
+
+        const record = {
+          id: Date.now(),
+          date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          initial,
+          monthly,
+          rate,
+          years,
+          futureValue
+        };
+
+        const saved = JSON.parse(localStorage.getItem('stitch_calcs') || '[]');
+        saved.unshift(record);
+        if (saved.length > 8) saved.pop();
+        localStorage.setItem('stitch_calcs', JSON.stringify(saved));
+
+        renderSavedCalculations();
+        showToast('Calculation saved to log!');
+      }
+
+      function renderSavedCalculations() {
+        const container = document.getElementById('savedCalcsList');
+        if (!container) return;
+
+        const saved = JSON.parse(localStorage.getItem('stitch_calcs') || '[]');
+        if (saved.length === 0) {
+          container.innerHTML = `
+            <div class="p-4 rounded-2xl bg-midnight-950/60 border border-midnight-border text-center text-xs text-slate-500">
+              No calculations saved yet. Tap "Save to Log" in the Calculator tab.
+            </div>
+          `;
+          return;
+        }
+
+        let html = '';
+        saved.forEach(item => {
+          html += `
+            <div class="p-3.5 rounded-2xl bg-midnight-900 border border-midnight-border flex items-center justify-between hover:border-amber-500/40 transition-colors">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-bold font-mono text-white">${item.futureValue}</span>
+                  <span class="text-[10px] text-slate-500 font-mono">${item.date}</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-0.5 font-mono">
+                  $${item.initial.toLocaleString()} init · $${item.monthly}/mo · ${item.rate}% · ${item.years}y
+                </p>
+              </div>
+              <button onclick="loadSavedCalc(${item.id})" class="px-2.5 py-1 rounded-lg bg-midnight-800 hover:bg-amber-500 hover:text-midnight-950 text-amber-400 text-xs font-semibold border border-midnight-borderLight transition-colors">
+                Load
+              </button>
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+      }
+
+      function loadSavedCalc(id) {
+        const saved = JSON.parse(localStorage.getItem('stitch_calcs') || '[]');
+        const item = saved.find(i => i.id === id);
+        if (!item) return;
+
+        document.getElementById('inputInitial').value = item.initial;
+        document.getElementById('inputMonthly').value = item.monthly;
+        document.getElementById('inputRate').value = item.rate;
+        document.getElementById('inputYears').value = item.years;
+        handleCalcChange();
+        switchScreen('calc');
+        showToast(`Loaded ${item.futureValue} calculation`);
+      }
+
+      function clearAllSavedCalcs() {
+        localStorage.removeItem('stitch_calcs');
+        renderSavedCalculations();
+        showToast('All saved calculations cleared');
+      }
+
+      // ==========================================
+      // QUIZ LOGIC
+      // ==========================================
+      function renderQuizQuestion() {
+        const q = quizQuestions[quizState.currentIndex];
+        if (!q) return;
+
+        // Reset question view state
+        quizState.selectedOption = null;
+        quizState.isAnswered = false;
+
+        document.getElementById('quizStepLabel').textContent = `Question ${quizState.currentIndex + 1} of ${quizQuestions.length}`;
+        document.getElementById('quizCategoryBadge').textContent = q.category;
+        document.getElementById('quizQuestionText').textContent = q.question;
+        document.getElementById('quizLiveScore').textContent = quizState.score;
+
+        const progressPct = ((quizState.currentIndex + 1) / quizQuestions.length) * 100;
+        document.getElementById('quizProgressBar').style.width = `${progressPct}%`;
+
+        // Render Options
+        const listEl = document.getElementById('quizOptionsList');
+        let html = '';
+        const optionPrefix = ['A', 'B', 'C', 'D'];
+
+        q.options.forEach((opt, idx) => {
+          html += `
+            <button onclick="selectQuizOption(${idx})" id="quizOptionBtn_${idx}" class="w-full p-4 rounded-2xl bg-midnight-850 hover:bg-midnight-800 border border-midnight-border text-left transition-all flex items-start gap-3 active:scale-[0.99]">
+              <span class="w-6 h-6 rounded-lg bg-midnight-950 border border-midnight-border flex items-center justify-center text-xs font-bold text-slate-400 shrink-0 mt-0.5">
+                ${optionPrefix[idx]}
+              </span>
+              <span class="text-xs font-semibold text-slate-200 leading-snug flex-1">${opt}</span>
+            </button>
+          `;
+        });
+
+        listEl.innerHTML = html;
+
+        // Reset explanation box and next button
+        document.getElementById('quizExplanationBox').classList.add('hidden');
+        const nextBtn = document.getElementById('quizNextBtn');
+        nextBtn.disabled = true;
+        nextBtn.className = 'w-full py-3.5 px-4 rounded-2xl bg-midnight-800 text-slate-500 font-extrabold text-sm flex items-center justify-center gap-2 border border-midnight-border transition-all cursor-not-allowed';
+        nextBtn.innerHTML = '<span>Select an Option</span>';
+      }
+
+      function selectQuizOption(index) {
+        if (quizState.isAnswered) return;
+        quizState.isAnswered = true;
+        quizState.selectedOption = index;
+
+        const q = quizQuestions[quizState.currentIndex];
+        const isCorrect = index === q.correct;
+        if (isCorrect) {
+          quizState.score++;
+          document.getElementById('quizLiveScore').textContent = quizState.score;
+        }
+
+        // Highlight options
+        q.options.forEach((_, idx) => {
+          const btn = document.getElementById(`quizOptionBtn_${idx}`);
+          if (!btn) return;
+          btn.disabled = true;
+
+          if (idx === q.correct) {
+            btn.className = 'w-full p-4 rounded-2xl bg-emerald-500/15 border-2 border-emerald-500 text-left flex items-start gap-3';
+            const badge = btn.querySelector('span');
+            badge.className = 'w-6 h-6 rounded-lg bg-emerald-500 text-midnight-950 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5';
+            badge.textContent = '✓';
+          } else if (idx === index && !isCorrect) {
+            btn.className = 'w-full p-4 rounded-2xl bg-rose-500/15 border-2 border-rose-500 text-left flex items-start gap-3';
+            const badge = btn.querySelector('span');
+            badge.className = 'w-6 h-6 rounded-lg bg-rose-500 text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5';
+            badge.textContent = '✕';
+          } else {
+            btn.className = 'w-full p-4 rounded-2xl bg-midnight-950/40 border border-midnight-border text-left flex items-start gap-3 opacity-40';
+          }
+        });
+
+        // Show Explanation
+        const explainBox = document.getElementById('quizExplanationBox');
+        const icon = document.getElementById('quizFeedbackIcon');
+        const title = document.getElementById('quizFeedbackTitle');
+        const text = document.getElementById('quizExplanationText');
+
+        explainBox.classList.remove('hidden');
+        if (isCorrect) {
+          explainBox.className = 'p-4 rounded-2xl bg-emerald-950/30 border border-emerald-500/40';
+          icon.className = 'w-5 h-5 rounded-full bg-emerald-500 text-midnight-950 flex items-center justify-center text-xs font-bold';
+          icon.textContent = '✓';
+          title.className = 'text-xs font-bold text-emerald-400';
+          title.textContent = 'Correct Insight!';
+        } else {
+          explainBox.className = 'p-4 rounded-2xl bg-rose-950/30 border border-rose-500/40';
+          icon.className = 'w-5 h-5 rounded-full bg-rose-500 text-white flex items-center justify-center text-xs font-bold';
+          icon.textContent = '✕';
+          title.className = 'text-xs font-bold text-rose-400';
+          title.textContent = 'Incorrect';
+        }
+        text.textContent = q.explanation;
+
+        // Activate Next Button
+        const nextBtn = document.getElementById('quizNextBtn');
+        nextBtn.disabled = false;
+        nextBtn.className = 'w-full py-3.5 px-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-midnight-950 font-extrabold text-sm flex items-center justify-center gap-2 shadow-amber-glow transition-all active:scale-95 cursor-pointer';
+        
+        const isLast = quizState.currentIndex === quizQuestions.length - 1;
+        nextBtn.innerHTML = `<span>${isLast ? 'View Final Results 🏆' : 'Next Question →'}</span>`;
+      }
+
+      function handleQuizNext() {
+        if (quizState.currentIndex < quizQuestions.length - 1) {
+          quizState.currentIndex++;
+          renderQuizQuestion();
+        } else {
+          showQuizResults();
+        }
+      }
+
+      function showQuizResults() {
+        document.getElementById('quizActiveView').classList.add('hidden');
+        document.getElementById('quizFinishedView').classList.remove('hidden');
+
+        document.getElementById('quizFinalScore').textContent = quizState.score;
+        const pct = Math.round((quizState.score / quizQuestions.length) * 100);
+        document.getElementById('quizScorePercentage').textContent = `${pct}% Financial Accuracy`;
+
+        let rank = 'Tier 5 · Wealth Scholar';
+        if (quizState.score === 5) rank = 'Tier 5 · Elite Wealth Strategist 🏆';
+        else if (quizState.score >= 4) rank = 'Tier 4 · Advanced Asset Builder ⭐';
+        else if (quizState.score >= 3) rank = 'Tier 3 · Capable Investor';
+        else rank = 'Tier 2 · Emerging Apprentice';
+
+        document.getElementById('quizBadgeRank').textContent = rank;
+      }
+
+      function restartQuiz() {
+        quizState.currentIndex = 0;
+        quizState.score = 0;
+        document.getElementById('quizFinishedView').classList.add('hidden');
+        document.getElementById('quizActiveView').classList.remove('hidden');
+        renderQuizQuestion();
+      }
+
+      // ==========================================
+      // UTILITY FUNCTIONS
+      // ==========================================
+      function formatCurrency(val) {
+        return '$' + Math.round(val).toLocaleString();
+      }
+
+      function showToast(msg) {
+        const toast = document.getElementById('appToast');
+        const toastMsg = document.getElementById('toastMessage');
+        if (!toast || !toastMsg) return;
+
+        toastMsg.textContent = msg;
+        toast.classList.remove('opacity-0', 'translate-y-3');
+        toast.classList.add('opacity-100', 'translate-y-0');
+
+        setTimeout(() => {
+          toast.classList.remove('opacity-100', 'translate-y-0');
+          toast.classList.add('opacity-0', 'translate-y-3');
+        }, 2400);
+      }
+
+      function quickDepositAction() {
+        showToast('Simulated Deposit: +$1,000 added!');
+      }
+
+      // Download self-contained index.html directly from browser
+      function downloadStandaloneHTML() {
+        const fullHtml = document.documentElement.outerHTML;
+        const blob = new Blob(['<!doctype html>\n' + fullHtml], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'index.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('Downloaded standalone index.html');
+      }
+
+      // Copy self-contained code to clipboard
+      function copyStandaloneHTML() {
+        const fullHtml = '<!doctype html>\n' + document.documentElement.outerHTML;
+        navigator.clipboard.writeText(fullHtml).then(() => {
+          showToast('Copied standalone index.html code!');
+        }).catch(() => {
+          showToast('Code copied to clipboard');
+        });
+      }
+    </script>
+  </body>
+</html>
